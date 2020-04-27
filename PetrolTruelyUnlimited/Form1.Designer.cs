@@ -55,16 +55,21 @@
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lab_Input = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.TestTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lab_Vehicle
             // 
             this.lab_Vehicle.AutoSize = true;
+            this.lab_Vehicle.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lab_Vehicle.Location = new System.Drawing.Point(13, 62);
             this.lab_Vehicle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lab_Vehicle.Name = "lab_Vehicle";
-            this.lab_Vehicle.Size = new System.Drawing.Size(53, 20);
+            this.lab_Vehicle.Size = new System.Drawing.Size(74, 24);
             this.lab_Vehicle.TabIndex = 0;
             this.lab_Vehicle.Text = "label1";
             // 
@@ -291,12 +296,48 @@
             this.lab_Input.TabIndex = 0;
             this.lab_Input.Text = "Input";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(28, 306);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(61, 20);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "label12";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(28, 344);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(61, 20);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "label12";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(28, 392);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(61, 20);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "label12";
+            // 
+            // TestTimer
+            // 
+            this.TestTimer.Enabled = true;
+            this.TestTimer.Interval = 1;
+            this.TestTimer.Tick += new System.EventHandler(this.TestTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(875, 251);
+            this.ClientSize = new System.Drawing.Size(875, 483);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -363,6 +404,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lab_Input;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Timer TestTimer;
     }
 }
 

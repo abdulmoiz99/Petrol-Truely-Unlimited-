@@ -14,6 +14,13 @@ namespace PetrolTruelyUnlimited
     {
         Vehicle[] vehicle = new Vehicle[1000];
         Pump[] pump = new Pump[9];
+        VehicleStats VehicleStats = new VehicleStats();
+
+
+        string[] vehicleType = { "CAR->", "Van->", "HGV->" };
+        string[] fuelType = { "Unleaded", "Diesel ", "LPG" };
+
+
         bool isWaiting = false;
         int objectIndex = 0;
 
@@ -40,19 +47,22 @@ namespace PetrolTruelyUnlimited
             if (isWaiting == false)
             {
                 int randomNumber = random.Next(1500, 2201);
-               
+
                 vehicleTimer.Interval = 2500;
-                vehicle[objectIndex] = new Vehicle("Car", "Petrol");
-                Console.WriteLine("Created" + randomNumber);
-                lab_Vehicle.Text = "CAR->";
+
+                int randomValue = random.Next(0, 3);
+                vehicle[objectIndex] = new Vehicle(vehicleType[randomValue], fuelType[randomValue]);
+                lab_Vehicle.Text = vehicleType[randomValue];
                 isWaiting = true;
+                VehicleStats.IncrementTotalVehicle();
             }
             else
-            {  
+            {
                 vehicleTimer.Interval = 1500;
                 objectIndex++;
                 isWaiting = false;
                 lab_Vehicle.Text = "";
+                VehicleStats.IncrementVehicleReturned();
 
             }
 
@@ -77,12 +87,14 @@ namespace PetrolTruelyUnlimited
                 {
                     isWaiting = false;
                     lab_Vehicle.Text = "";
+
                     switch (pumpNo)
                     {
                         case 1:
                             if (pump[0].getStatus() == true)
                             {
                                 pump[0] = new Pump(pnl_Pump1);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -91,13 +103,16 @@ namespace PetrolTruelyUnlimited
                             if (pump[1].getStatus() == true)
                             {
                                 pump[1] = new Pump(pnl_Pump2);
+                                VehicleStats.IncrementVehicleFueled();
+
                             }
-                            else lab_Input.Text = "Pump " +pumpNo.ToString()+" Is Busy";
+                            else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
                         case 3:
                             if (pump[2].getStatus() == true)
                             {
                                 pump[2] = new Pump(pnl_Pump3);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -105,6 +120,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[3].getStatus() == true)
                             {
                                 pump[3] = new Pump(pnl_Pump4);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -112,6 +128,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[4].getStatus() == true)
                             {
                                 pump[4] = new Pump(pnl_Pump5);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -119,6 +136,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[5].getStatus() == true)
                             {
                                 pump[5] = new Pump(pnl_Pump6);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -126,6 +144,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[6].getStatus() == true)
                             {
                                 pump[6] = new Pump(pnl_Pump7);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -133,6 +152,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[7].getStatus() == true)
                             {
                                 pump[7] = new Pump(pnl_Pump8);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -140,15 +160,25 @@ namespace PetrolTruelyUnlimited
                             if (pump[8].getStatus() == true)
                             {
                                 pump[8] = new Pump(pnl_Pump9);
+                                VehicleStats.IncrementVehicleFueled();
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
+
                         default:
                             break;
                     }
                 }
                 else lab_Input.Text = "No Vehicle In Waitng";
             }
+        }
+
+        private void TestTimer_Tick(object sender, EventArgs e)
+        {
+            label12.Text = VehicleStats.getTotalVehicle().ToString();
+            label13.Text = VehicleStats.getVehicleFueled().ToString();
+            label14.Text = VehicleStats.getVehicleReturned().ToString();
+
         }
     }
 }
