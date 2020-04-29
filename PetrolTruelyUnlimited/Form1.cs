@@ -15,14 +15,17 @@ namespace PetrolTruelyUnlimited
         Vehicle[] vehicle = new Vehicle[1000];
         Pump[] pump = new Pump[9];
         VehicleStats VehicleStats = new VehicleStats();
+        Transaction transaction;
 
+        const double COSTPERLITER = 110;
 
-        string[] vehicleType = { "CAR->", "Van->", "HGV->" };
+        string[] vehicleType = { "Car", "Van", "HGV" };
         string[] fuelType = { "Unleaded", "Diesel ", "LPG" };
 
 
         bool isWaiting = false;
         int objectIndex = 0;
+        int intervalTime;
 
         public Form1()
         {
@@ -46,13 +49,15 @@ namespace PetrolTruelyUnlimited
             Random random = new Random();
             if (isWaiting == false)
             {
-                int randomNumber = random.Next(1500, 2201);
+                intervalTime = random.Next(1500, 2201);
 
-                vehicleTimer.Interval = 2500;
+                vehicleTimer.Interval = intervalTime;
 
-                int randomValue = random.Next(0, 3);
-                vehicle[objectIndex] = new Vehicle(vehicleType[randomValue], fuelType[randomValue]);
-                lab_Vehicle.Text = vehicleType[randomValue];
+                int randomVehicle = random.Next(0, 3);
+                int randomFuel = random.Next(0, 3);
+                vehicle[objectIndex] = new Vehicle(vehicleType[randomVehicle], fuelType[randomFuel]);
+                lab_TotalVehicles.Text = "Total Vehicles: " + VehicleStats.getTotalVehicle().ToString();
+                lab_Vehicle.Text = vehicleType[randomVehicle];
                 isWaiting = true;
                 VehicleStats.IncrementTotalVehicle();
             }
@@ -63,7 +68,7 @@ namespace PetrolTruelyUnlimited
                 isWaiting = false;
                 lab_Vehicle.Text = "";
                 VehicleStats.IncrementVehicleReturned();
-
+                lab_VehiclesRetured.Text = "Vehicles Returned: " + VehicleStats.getVehicleReturned().ToString();
             }
 
         }
@@ -94,7 +99,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[0].getStatus() == true)
                             {
                                 pump[0] = new Pump(pnl_Pump1);
-                                VehicleStats.IncrementVehicleFueled();
+
+                                CalculateDispension(0);
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -103,7 +109,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[1].getStatus() == true)
                             {
                                 pump[1] = new Pump(pnl_Pump2);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(1);
 
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
@@ -112,7 +118,7 @@ namespace PetrolTruelyUnlimited
                             if (pump[2].getStatus() == true)
                             {
                                 pump[2] = new Pump(pnl_Pump3);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(2);
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -120,7 +126,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[3].getStatus() == true)
                             {
                                 pump[3] = new Pump(pnl_Pump4);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(3);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -128,7 +135,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[4].getStatus() == true)
                             {
                                 pump[4] = new Pump(pnl_Pump5);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(4);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -136,7 +144,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[5].getStatus() == true)
                             {
                                 pump[5] = new Pump(pnl_Pump6);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(5);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -144,7 +153,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[6].getStatus() == true)
                             {
                                 pump[6] = new Pump(pnl_Pump7);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(6);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -152,7 +162,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[7].getStatus() == true)
                             {
                                 pump[7] = new Pump(pnl_Pump8);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(7);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -160,7 +171,8 @@ namespace PetrolTruelyUnlimited
                             if (pump[8].getStatus() == true)
                             {
                                 pump[8] = new Pump(pnl_Pump9);
-                                VehicleStats.IncrementVehicleFueled();
+                                CalculateDispension(8);
+
                             }
                             else lab_Input.Text = "Pump " + pumpNo.ToString() + " Is Busy";
                             break;
@@ -173,12 +185,58 @@ namespace PetrolTruelyUnlimited
             }
         }
 
-        private void TestTimer_Tick(object sender, EventArgs e)
+        private void CalculateDispension(int index)
         {
-            label12.Text = VehicleStats.getTotalVehicle().ToString();
-            label13.Text = VehicleStats.getVehicleFueled().ToString();
-            label14.Text = VehicleStats.getVehicleReturned().ToString();
+
+            VehicleStats.IncrementVehicleFueled();
+            lab_VehiclesFueled.Text = "Vehicles Fueled: " + VehicleStats.getVehicleFueled().ToString();
+
+            if (vehicle[objectIndex].getFuelType() == "Unleaded")
+            {
+                PumpStats.IncrementliterDispensed(pump[index].getFuelIntervalTime());
+                pump[index].AddUnleadedDispensed(PumpStats.getLiterDispensed());
+            }
+            else if (vehicle[objectIndex].getFuelType() == "Diesel")
+            {
+                PumpStats.IncrementliterDispensed(pump[index].getFuelIntervalTime());
+                pump[index].AddDieselDispensed(PumpStats.getLiterDispensed());
+            }
+            else
+            {
+                PumpStats.IncrementliterDispensed(pump[index].getFuelIntervalTime());
+                pump[index].AddLPGDispensed(PumpStats.getLiterDispensed());
+            }
+            transaction = new Transaction(vehicle[objectIndex].getVehicleType(), PumpStats.getLiterDispensed(), index + 1);
+            AddTransactionToList();
+            lab_TotalFuelDispensed.Text = "Total Fuel Dispensed: " + PumpStats.getTotalliterDispensed();
+            lab_TotalAmount.Text = "Total Amount: " + PumpStats.getTotalliterDispensed() * COSTPERLITER;
+            lab_commission.Text = "1% commission: " + PumpStats.getTotalliterDispensed() * COSTPERLITER * 0.01;
+        }
+
+        private void AddTransactionToList()
+        {
+            string[] row = { transaction.getVehicleType(), transaction.getNumberOFLiters().ToString(), transaction.getPumpNumber().ToString() };
+            var listViewItem = new ListViewItem(row);
+            listView1.Items.Add(listViewItem);
+        }
+
+
+
+        private void label12_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

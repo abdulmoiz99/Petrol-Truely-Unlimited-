@@ -11,10 +11,14 @@ namespace PetrolTruelyUnlimited
 {
     class Pump
     {
-        Panel panel;
+        private Panel panel;
         System.Windows.Forms.Timer timer;
-        bool available = true;
+        private bool available = true;
         Random random = new Random();
+        private double unleadedDispensed = 0;
+        private double LPGDispensed = 0;
+        private double dieselDispensed = 0;
+        private int FuelIntervalTime = 0;
         public Pump()
         {
 
@@ -25,16 +29,16 @@ namespace PetrolTruelyUnlimited
             timer = new System.Windows.Forms.Timer();
             updatePanel();
             available = false;
-            int randomNumber = random.Next(4000, 5000);
+            int randomNumber = random.Next(17000, 19001);
+            FuelIntervalTime = randomNumber;
             timer.Interval = randomNumber;
             timer.Start();
             timer.Tick += new EventHandler(Timer_Tick);
-          
-           
+
         }
         private void updatePanel()
         {
-            if (available==true)
+            if (available == true)
             {
                 panel.BackColor = Color.Red;
             }
@@ -48,7 +52,23 @@ namespace PetrolTruelyUnlimited
         }
         public bool getStatus()
         {
-           return available ;
+            return available;
+        }
+        public void AddUnleadedDispensed(double unleaded)
+        {
+            unleadedDispensed += unleaded;
+        }
+        public void AddLPGDispensed(double LPG)
+        {
+            LPGDispensed += LPG;
+        }
+        public void AddDieselDispensed(double diesel)
+        {
+            dieselDispensed += diesel;
+        }
+        public int getFuelIntervalTime()
+        {
+            return FuelIntervalTime;
         }
     }
 }

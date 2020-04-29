@@ -10,7 +10,7 @@ namespace PetrolTruelyUnlimited
     {
         static int vehicleCreated = 0;
         public static bool isWaiting = false;
-        public bool isServed { get;  set; }
+        public bool isServed { get; set; }
         public string fuelType { get; set; }
         //Unleaded, Diesel and LPG
         public string vehicleType { get; set; }
@@ -30,6 +30,13 @@ namespace PetrolTruelyUnlimited
         {
             isWaiting = true;
         }
-
+        public string getFuelType()
+        {
+            return fuelType;
+        }
+        public string getVehicleType()
+        {
+            return vehicleType;
+        }
     }
 }
